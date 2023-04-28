@@ -5,10 +5,22 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PiCamera Home</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 </head>
 <body>
     <h1>Camera Capture</h1>
 
-    <img src="data:image/jpeg;base64,{{image_data}}">
+    <img src="data:image/jpeg;base64,{{image_data}}" id="imageDisplay">
+
+    <script>
+function updateImage() {
+    $.get("./get_image_b64", (data) => {
+        $("#imageDisplay").attr("src", "data:image/jpeg;base64," + data)
+    })
+}
+$(document).ready(() => {
+setInterval(updateImage, 100)
+})
+    </script>
 </body>
 </html>

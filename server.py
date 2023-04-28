@@ -10,8 +10,11 @@ app = Flask(__name__)
 
 @app.route("/")
 def index():
-    image_data = capture.get_image_b64().decode()
-    return render_template("index.html", image_data=image_data)
+    return render_template("index.html", image_data=get_image_b64())
+
+@app.route("/get_image_b64")
+def get_image_b64():
+    return capture.get_image_b64().decode()
 
 if __name__ == "__main__":
     app.run("0.0.0.0")

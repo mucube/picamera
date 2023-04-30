@@ -26,12 +26,12 @@ class Capture:
         self.cam.start()
 
     def get_image_b64(self):
-        '''Get image data as JPEG base64 bytes'''
+        '''Get image data as BMP base64 bytes'''
         if self.cam.query_image():
             self.snapshot = self.cam.get_image(self.snapshot)
 
         buffer = io.BytesIO()
-        pygame.image.save(self.snapshot, buffer, "jpeg")
+        pygame.image.save(self.snapshot, buffer, "bmp")
         b64_data = base64.b64encode(buffer.getvalue())
         return b64_data
     

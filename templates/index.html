@@ -15,11 +15,11 @@
     <script>
 function updateImage() {
     $.get("./get_image_b64", (data) => {
-        $("#imageDisplay").attr("src", "data:image/jpeg;base64," + data)
+        $("#imageDisplay").attr("src", "data:image/bmp;base64," + data)
     })
 }
 $(document).ready(() => {
-setInterval(updateImage, 100)
+    setInterval(updateImage, 100)
 })
     </script>
 </body>

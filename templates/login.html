@@ -1,5 +1,26 @@
-{% block title %}Please Log In{% endblock %}
+{% extends "layout.html" %}
+{% block title %}Log In{% endblock %}
 
 {% block content %}
-<h1>Placeholder for Now</h1>
+<h1>Login</h1>
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+    <div class="notification is-danger">
+        {{ messages[0] }}
+    </div>
+{% endif %}
+{% endwith %}
+<form action="/login" method="post">
+  <div class="mb-3">
+    <label for="password" class="form-label">Password</label>
+    <input type="password" class="form-control" id="password" name="password">
+  </div>
+  <div class="field">
+    <label class="checkbox">
+        <input type="checkbox" name="remember">
+        Remember me
+    </label>
+   </div>
+  <button type="submit" class="btn btn-primary">Login</button>
+</form>
 {% endblock %}

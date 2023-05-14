@@ -5,7 +5,7 @@
 <h1>Camera Capture</h1>
 
 <img src="data:image/bmp;base64,{{image_data}}" id="imageDisplay"><br/>
-<a id="downloadLink" href="data:image/bmp;base64,{{image_data}}" download="image.bmp"><button>Download image</button></a>
+<a id="downloadLink" href="data:image/bmp;base64,{{image_data}}" download="image.bmp"><button class="btn btn-primary">Download image</button></a>
 
 <script>
 function update() {
@@ -15,7 +15,7 @@ $.get("./get_image_b64", (data) => {
 })    
 }
 $(document).ready(() => {
-setInterval(update, 100)
+    setInterval(update, 100)
 })
 </script>
 {% endblock %}

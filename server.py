@@ -23,15 +23,29 @@ class User(UserMixin):
 
 ADMIN_USER = User(0, config.get('password_hash'))
 
+def conditional_login_required(condition: bool):
+    '''A wrapper for the login_required decorator that can be turned on or off based on a condition'''
+    def decorator_wrapper(func):
+        if not condition:
+            return login_required(func)
+        return func
+    return decorator_wrapper
+
 @login_manager.user_loader
 def load_user(user_id):
     return ADMIN_USER
 
+@app.errorhandler(401)
+def unauthorized(e):
+    return render_template("login.html")
+
 @app.route("/")
+@conditional_login_required(config.get("view_perm"))
 def index():
     return render_template("index.html", image_data=get_image_b64())
 
 @app.route("/get_image_b64")
+@conditional_login_required(config.get("view_perm"))
 def get_image_b64():
     return capture.get_image_b64().decode()
 

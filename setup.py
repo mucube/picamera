@@ -2,6 +2,7 @@
 from werkzeug.security import generate_password_hash
 import config
 import os
+import subprocess
 
 def set_password():
     password = input("Type admin password (please make it unique): ")
@@ -36,3 +37,21 @@ def set_view_perm():
         set_view_perm()
 
 set_view_perm()
+
+# extremely hacky code to get the device driver name and human-readable names of all the cameras
+cmd_output = subprocess.check_output(['v4l2-ctl', '--list-devices']).decode('utf-8')
+lines = cmd_output.splitlines()[:-1]
+x = []
+for line in lines:
+    if line[0] != '\t':
+        x.append(line)
+cmd_output = cmd_output.replace('\t', '')
+for line in x:
+    cmd_output = cmd_output.replace(line, '\t')
+splitted = [i for i in cmd_output.split('\t') if i != '']
+camera_dict = dict()
+for i in range(len(x)):
+    name = x[i][:-1]
+    y = [i for i in splitted[i].splitlines() if i != ''][0]
+    camera_dict[name] = y
+config.set("camera_data", camera_dict)

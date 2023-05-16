@@ -1,21 +1,12 @@
 {% extends "layout.html" %}
-{% block title %}Home{% endblock %}
+{% block title %}Index{% endblock %}
 
 {% block content %}
-<h1>Camera Capture</h1>
+<h1>Camera Index</h1>
 
-<img src="data:image/bmp;base64,{{image_data}}" id="imageDisplay"><br/>
-<a id="downloadLink" href="data:image/bmp;base64,{{image_data}}" download="image.bmp"><button class="btn btn-primary">Download image</button></a>
-
-<script>
-function update() {
-$.get("./get_image_b64", (data) => {
-    $("#imageDisplay").attr("src", "data:image/bmp;base64," + data)
-    $("#downloadLink").attr("href", "data:image/bmp;base64," + data)
-})    
-}
-$(document).ready(() => {
-    setInterval(update, 100)
-})
-</script>
+<ul>
+{% for camera_name in camera_data.keys() %}
+<li><a href="/feed?device_name={{camera_data[camera_name]}}">{{camera_name}}</a></li>
+{% endfor %}
+</ul>
 {% endblock %}

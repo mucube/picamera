@@ -3,12 +3,11 @@ from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
 from werkzeug.security import check_password_hash
 
-from camera import Capture
+import camera
 import config
 
-# camera init stuff
-capture = Capture()
-capture.start()
+# init camera capture for every camera listed in config
+
 
 app = Flask(__name__)
 app.secret_key = config.get("secret_key")
@@ -42,12 +41,20 @@ def unauthorized(e):
 @app.route("/")
 @conditional_login_required(config.get("view_perm"))
 def index():
-    return render_template("index.html", image_data=get_image_b64())
+    camera_data = config.get("camera_data")
+    return render_template("index.html", camera_data=camera_data)
+
+@app.route("/feed")
+@conditional_login_required(config.get("view_perm"))
+def feed():
+    device_name = request.args.get("device_name")
+    return render_template("feed.html", image_data=camera.get_image_b64(device_name), device_name=device_name)
 
 @app.route("/get_image_b64")
 @conditional_login_required(config.get("view_perm"))
 def get_image_b64():
-    return capture.get_image_b64().decode()
+    device_name = request.args.get("device_name")
+    return camera.get_image_b64(device_name)
 
 @app.route("/login", methods=["GET"])
 def login():

@@ -1,13 +1,10 @@
 # This is the code for the Flask web server
 from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
-from werkzeug.security import check_password_hash
+from werkzeug.security import check_password_hash, generate_password_hash
 
 import camera
 import config
-
-# init camera capture for every camera listed in config
-
 
 app = Flask(__name__)
 app.secret_key = config.get("secret_key")
@@ -36,7 +33,7 @@ def load_user(user_id):
 
 @app.errorhandler(401)
 def unauthorized(e):
-    return render_template("login.html")
+    return render_template("401.html")
 
 @app.route("/")
 @conditional_login_required(config.get("view_perm"))
@@ -76,6 +73,23 @@ def login_post():
 @login_required
 def settings():
     return render_template("settings.html")
+
+@app.route("/password_change_successful")
+def password_change_successful():
+    return render_template('password_change_successful.html')
+
+@app.route("/change_password", methods=["POST"])
+@login_required
+def change_password():
+    old_password = request.form.get('oldPassword')
+    new_password = request.form.get('newPassword')
+
+    if not check_password_hash(ADMIN_USER.password_hash, old_password):
+        return render_template('401.html'), 401
+    
+    new_password_hash = generate_password_hash(new_password)
+    config.set('password_hash', new_password_hash)
+    return redirect(url_for('password_change_successful'))
 
 @app.route("/logout")
 def logout():

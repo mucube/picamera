@@ -2,5 +2,13 @@
 {% block title %}Settings{% endblock %}
 
 {% block content %}
-<h1>Placeholder for Now</h1>
+<h1>Login</h1>
+<h2>Change Password</h2>
+<form id="changePasswordForm" action="/change_password" method="post">
+    <label for="oldPassword">Enter the old password:</label>
+    <input type="password" name="oldPassword" id="oldPasswordInput"><br>
+    <label for="newPassword">Enter the new password:</label>
+    <input type="password" name="newPassword" id="newPasswordInput"><br>
+    <input type="submit" value="Submit" class="btn btn-primary">
+</form>
 {% endblock %}

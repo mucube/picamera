@@ -5,11 +5,21 @@ import os
 from utils import set_env
 import camera_setup
 
+distro = input("If your current Linux distribution is Debian-based (includes Ubuntu and Raspberry Pi OS), enter 1.\nIf your current Linux distribution is Arch-based, enter 2.")
+
 # install some needed packages
 print("installing packages...")
-os.system("sudo apt-get install v4l-utils") #package is needed to view camera list
-os.system("sudo apt-get install ffmpeg")
-os.system("sudo apt-get install v4l2loopback-dkms") #for duplicating webcams so multiple apps can use it at the same time
+if distro == "1":
+    os.system("sudo apt-get install v4l-utils") #package is needed to view camera list
+    os.system("sudo apt-get install ffmpeg")
+    os.system("sudo apt-get install v4l2loopback-dkms") #for duplicating webcams so multiple apps can use it at the same time
+elif distro == "2":
+    os.system("sudo pacman -S v4l-utils")
+    os.system("sudo pacman -S ffmpeg")
+    os.system("sudo pacman -S v4l2loopback-dkms")
+else:
+    print("You entered an invalid input. Exiting.")
+    quit()
 
 os.system("python3 -m pip install --upgrade flask")
 os.system("python3 -m pip install flask-login opencv-python")

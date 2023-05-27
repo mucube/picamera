@@ -13,5 +13,5 @@ now = datetime.datetime.now()
 one_hour_later = now + datetime.timedelta(hours=1)
 
 for device in dummy_camera_data.keys():
-    dummy_cameras = dummy_camera_data[device]
-    os.system(f"ffmpeg -f v4l2 -i {dummy_cameras[1]} -framerate 20 -t 00:00:10 -vcodec libx264 {recording_path}/recording-{device.replace('/dev/', '')}-{now.strftime('%Y-%m-%d')}-{now.strftime('%H_%M_%S')}-{one_hour_later.strftime('%H_%M_%S')}.mp4")
+    filename = f"{recording_path}/recording-{device.replace('/dev/', '')}-{now.strftime('%Y-%m-%d')}-{now.strftime('%H_%M_%S')}-{one_hour_later.strftime('%H_%M_%S')}.mp4"
+    os.system(f"ffmpeg -f v4l2 -i {dummy_camera_data[device][1]} -framerate 20 -t 00:00:10 -vcodec libx264 {filename}")

@@ -11,8 +11,8 @@ os.system("sudo apt-get install v4l-utils") #package is needed to view camera li
 os.system("sudo apt-get install ffmpeg")
 os.system("sudo apt-get install v4l2loopback-dkms") #for duplicating webcams so multiple apps can use it at the same time
 
-os.system("python3 -m pip install --upgrade pygame flask")
-os.system("python3 -m pip install flask-login")
+os.system("python3 -m pip install --upgrade flask")
+os.system("python3 -m pip install flask-login opencv-python")
 
 config_path = input("Input the full path of the config.json file (this is very important): ")
 set_env("PICAMERA_CONFIG_PATH", config_path)

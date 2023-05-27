@@ -7,10 +7,11 @@ import datetime
 
 camera_data = config.get("camera_data")
 dummy_camera_data = config.get("dummy_camera_data")
-recording_path = "~/Videos/Recordings"
+recording_path = config.get("recording_path")
 
 now = datetime.datetime.now()
 one_hour_later = now + datetime.timedelta(hours=1)
 
-for device in camera_data.values():
-    os.system(f"ffmpeg -f v4l2 -i {device} -framerate 20 -t 01:00:00 -vcodec libx264 {recording_path}/recording-{device.replace('/dev/', '')}-{now.strftime('%Y-%m-%d')}-{now.strftime('%H_%M_%S')}-{one_hour_later.strftime('%H_%M_%S')}.mp4")
+for device in dummy_camera_data.keys():
+    dummy_cameras = dummy_camera_data[device]
+    os.system(f"ffmpeg -f v4l2 -i {dummy_cameras[1]} -framerate 20 -t 00:00:10 -vcodec libx264 {recording_path}/recording-{device.replace('/dev/', '')}-{now.strftime('%Y-%m-%d')}-{now.strftime('%H_%M_%S')}-{one_hour_later.strftime('%H_%M_%S')}.mp4")

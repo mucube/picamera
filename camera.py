@@ -19,7 +19,6 @@ class Capture:
         self.snapshot = pygame.surface.Surface(self.size, 0)
 
         self.cam.start()
-        self.running = True
         
 
     def get_image_b64(self):
@@ -31,12 +30,13 @@ class Capture:
         pygame.image.save(self.snapshot, buffer, "bmp")
         b64_data = base64.b64encode(buffer.getvalue())
         return b64_data
-device_names = list(config.get("camera_data").values())
+dummy_camera_data = config.get("dummy_camera_data")
+device_names = dummy_camera_data.keys()
 
 capture_dict = dict() #maps device names to their capture object
 
 for device in device_names:
-    capture_obj = Capture(device)
+    capture_obj = Capture(dummy_camera_data[device][0])
     capture_dict[device] = capture_obj
 
 def get_image_b64(device_name):

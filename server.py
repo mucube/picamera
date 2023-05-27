@@ -1,6 +1,6 @@
 # This is the code for the Flask web server
 from flask import Flask, render_template, request, redirect, url_for, flash
-from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
+from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required
 from werkzeug.security import check_password_hash, generate_password_hash
 
 import camera
@@ -90,6 +90,22 @@ def change_password():
     new_password_hash = generate_password_hash(new_password)
     config.set('password_hash', new_password_hash)
     return redirect(url_for('password_change_successful'))
+
+@app.route("/change_view_perm", methods=["POST"])
+@login_required
+def change_view_perm():
+    perm = request.form.get('perm')
+
+    if perm == 'everyone':
+        config.set('view_perm', True)
+    elif perm == 'admin':
+        config.set('view_perm', False)
+
+    return redirect(url_for('settings_change_successful'))
+
+@app.route('/settings_change_successful')
+def settings_change_successful():
+    return render_template('settings_change_successful.html')
 
 @app.route("/logout")
 def logout():

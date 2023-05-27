@@ -11,4 +11,14 @@
     <input type="password" name="newPassword" id="newPasswordInput"><br>
     <input type="submit" value="Submit" class="btn btn-primary">
 </form>
+
+<h2>Change Camera Feed View Permissions</h2>
+<form action="/change_view_perm" method="post">
+    <p>Who should be able to see the camera feeds?</p>
+    Everyone
+    <input type="radio" name="perm" value="everyone"><br>
+    Only the admin
+    <input type="radio" name="perm" value="admin"><br>
+    <input type="submit" value="Submit" class="btn btn-primary">
+</form>
 {% endblock %}

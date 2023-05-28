@@ -25,7 +25,7 @@ First clone the GitHub repository:
 git clone https://github.com/mucube/picamera.git
 ```
 
-Then, make sure you have a USB camera attached (duh), and run the setup script:
+Then, run the setup script, which goes through the initial setup:
 
 ```
 python3 setup.py
@@ -41,7 +41,7 @@ Run `camera_setup.py`, and let it run in the background:
 python3 camera_setup.py
 ```
 
-Then run `server.py`:
+Then run `server.py`, which will also run in the background:
 
 ```
 python3 server.py

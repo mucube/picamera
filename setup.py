@@ -2,9 +2,10 @@
 from werkzeug.security import generate_password_hash
 import os
 
-import camera_setup
-
-distro = input("If your current Linux distribution is Debian-based (includes Ubuntu and Raspberry Pi OS), enter 1.\nIf your current Linux distribution is Arch-based, enter 2.")
+distro = input("""Input the number of the Linux distribution you are using:
+1. Debian (includes Ubuntu and Raspberry Pi OS)
+2. Arch Linux
+""")
 
 # install some needed packages
 print("installing packages...")
@@ -23,7 +24,13 @@ else:
 os.system("python3 -m pip install --upgrade flask")
 os.system("python3 -m pip install flask-login opencv-python")
 
-os.mkdir(os.path.expanduser("~/.config/picamera"))
+try:
+    os.mkdir(os.path.expanduser("~/.config/picamera"))
+except FileExistsError: #if the directory already exists
+    pass
+
+with open(os.path.expanduser("~/.config/picamera/config.json"), "w") as f:
+    f.write("{}")
 
 import config
 
@@ -54,11 +61,12 @@ def set_view_perm():
 
 set_view_perm()
 
-recording_path = input("Input the directory where the video recording will be stored (Make sure the directory exists, or else the recordings won't be stored!): ")
-config.set("recording_path", recording_path)
-
-camera_setup.setup()
-print("Sucessfully set up cameras")
+recording_path = input("Input the directory where the video recording will be stored: ")
+try:
+    os.mkdir(os.path.expanduser(recording_path))
+except FileExistsError: #if the directory already exists
+    pass
+config.set("recording_path", os.path.expanduser(recording_path))
 
 # add record_video.py to cron
 os.system("chmod +x ./record_video.py")

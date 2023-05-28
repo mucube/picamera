@@ -1,8 +1,9 @@
 # Simple helper functions to get and set config entries
 import json
+import os
 d = dict()
 
-config_path = "~/.config/picamera"
+config_path = os.path.expanduser("~/.config/picamera/config.json")
 
 try:
     with open(config_path, "r") as f:

@@ -2,7 +2,6 @@
 from werkzeug.security import generate_password_hash
 import os
 
-from utils import set_env
 import camera_setup
 
 distro = input("If your current Linux distribution is Debian-based (includes Ubuntu and Raspberry Pi OS), enter 1.\nIf your current Linux distribution is Arch-based, enter 2.")
@@ -24,8 +23,7 @@ else:
 os.system("python3 -m pip install --upgrade flask")
 os.system("python3 -m pip install flask-login opencv-python")
 
-config_path = input("Input the full path of the config.json file (this is very important): ")
-set_env("PICAMERA_CONFIG_PATH", config_path)
+os.mkdir(os.path.expanduser("~/.config/picamera"))
 
 import config
 

@@ -1,9 +1,8 @@
 # Simple helper functions to get and set config entries
 import json
-from utils import get_env
 d = dict()
 
-config_path = get_env("PICAMERA_CONFIG_PATH")
+config_path = "~/.config/picamera"
 
 try:
     with open(config_path, "r") as f:

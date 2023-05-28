@@ -4,17 +4,17 @@
 import os
 
 import config
-from utils import cmd_output
+import subprocess
 
 def setup():
-    command_output = cmd_output("v4l2-ctl --list-devices")
+    command_output = subprocess.run(["v4l2-ctl", "--list-devices"])
     number_of_cameras = len([i for i in command_output.splitlines()[:-1] if i != '' and i[0] != '\t'])
 
     # make two v4l2loopback dummy cameras for each camera so that one can be used by the browser video stream and one can be used for recording
     os.system("sudo modprobe v4l2loopback devices="+str(2*number_of_cameras))
 
     # extremely hacky code to detect connected cameras
-    command_output = cmd_output("v4l2-ctl --list-devices")
+    command_output = subprocess.run(["v4l2-ctl", "--list-devices"])
     lines = [i for i in command_output.splitlines()[:-1] if i != '']
     x = []
     for line in lines:

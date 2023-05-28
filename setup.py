@@ -69,11 +69,11 @@ except FileExistsError: #if the directory already exists
 config.set("recording_path", os.path.expanduser(recording_path))
 
 # add record_video.py to cron
-os.system("chmod +x ./record_video.py")
-os.system('(crontab -l 2>/dev/null; echo "0 * * * * $PWD/record_video.py") | crontab -') #https://stackoverflow.com/a/9625233
-print("Record video job succesfully added to cron")
+#os.system("chmod +x ./record_video.py")
+#os.system('(crontab -l 2>/dev/null; echo "0 * * * * $PWD/record_video.py") | crontab -') #https://stackoverflow.com/a/9625233
+#print("Record video job succesfully added to cron")
 
 # add camera_setup.py to cron
-os.system("chmod +x ./camera_setup.py")
-os.system('(crontab -l 2>/dev/null; echo "@reboot $PWD/camera_setup.py") | crontab -') #https://stackoverflow.com/a/9625233
-print("Camera setup job successfully added to cron")
+#os.system("chmod +x ./camera_setup.py")
+#os.system('(crontab -l 2>/dev/null; echo "@reboot $PWD/camera_setup.py") | crontab -') #https://stackoverflow.com/a/9625233
+#print("Camera setup job successfully added to cron")

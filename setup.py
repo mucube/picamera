@@ -1,5 +1,4 @@
 # Script to set config file
-from werkzeug.security import generate_password_hash
 import os
 
 distro = input("""Input the number of the Linux distribution you are using:
@@ -14,15 +13,15 @@ if distro == "1":
     os.system("sudo apt-get install ffmpeg")
     os.system("sudo apt-get install v4l2loopback-dkms") #for duplicating webcams so multiple apps can use it at the same time
 elif distro == "2":
-    os.system("sudo pacman -S v4l-utils")
-    os.system("sudo pacman -S ffmpeg")
-    os.system("sudo pacman -S v4l2loopback-dkms")
+    os.system("sudo pacman -S v4l-utils --needed --noconfirm")
+    os.system("sudo pacman -S ffmpeg --needed --noconfirm")
+    os.system("sudo pacman -S v4l2loopback-dkms --needed --noconfirm")
 else:
     print("You entered an invalid input. Exiting.")
     quit()
 
-os.system("python3 -m pip install --upgrade flask")
-os.system("python3 -m pip install flask-login opencv-python")
+os.system("python3 -m pip install flask flask-login opencv-python")
+from werkzeug.security import generate_password_hash
 
 try:
     os.mkdir(os.path.expanduser("~/.config/picamera"))

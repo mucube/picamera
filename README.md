@@ -41,6 +41,9 @@ Run `camera_setup.py`, and let it run in the background:
 python3 camera_setup.py
 ```
 
+If it throws an error, try again. For some reason (at least on my machine), it doesn't work first try most of the time, but it usually works the second time.
+
+
 Then run `server.py`, which will also run in the background:
 
 ```
